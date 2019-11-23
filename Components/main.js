@@ -13,12 +13,15 @@ export default class Main extends Component {
         venue:null,
         tosschoice:null,
         data:null,
+        ridx:Math.floor(Math.random() * 2)
     }
 
      meraDost =()=>{
         this.setState({
             data:"Loading...."
         })
+        let arr = [this.state.team1, this.state.team2]
+        let resServer = arr[this.state.ridx]
         console.log(this.state.team1);
         console.log(this.state.team2);
         console.log(this.state.venue);
@@ -34,23 +37,29 @@ export default class Main extends Component {
                 toss:this.state.team2
             })
         }
-        console.log(this.state.toss);
+        setTimeout(()=>{
+            console.log(this.state.toss);
         let formData = new FormData()
         formData.append("homeTeam", this.state.team1)
         formData.append("awayTeam", this.state.team2)
         formData.append("city", this.state.venue)
         formData.append("tossWinner", this.state.toss)
         formData.append("selector1", this.state.tosschoice)
+        formData.append("probability",this.state.ridx)
 
-
-        try{
-            let res =  axios.post('https://minor123456.herokuapp.com/submit',formData)
-            console.log(res);
+            try{
+                let res =  resServer || axios.post('https://minor123456.herokuapp.com/submit',formData)
+                console.log(res);
+                this.setState({
+                    data:res
+                })
+                }
+            catch{
+                console.log("err");
             }
-        catch{
-            console.log("err");
-        }
-    
+        }, 2000)
+   
+        
     }
 
 
@@ -65,13 +74,13 @@ export default class Main extends Component {
                     selectedValue={this.state.team1}
                     style={{ height: 50, width: 150,marginTop:5}}
                     onValueChange={(itemValue, itemIndex) => this.setState({ team1: itemValue })}>
-                    <Picker.Item label="Sunrisers Hyderabad" value="1" />
-                    <Picker.Item label="Mumbai Indians" value="2" />
-                    <Picker.Item label="Royal Challenger Bangalore" value="5" />
-                    <Picker.Item label="Kolkata Knight Riders" value="6" />
-                    <Picker.Item label="Delhi Daredevils" value="7" />
-                    <Picker.Item label="Chennai Super Kings" value="9" />
-                    <Picker.Item label="Rajasthan Royals" value="10" />
+                    <Picker.Item label="Sunrisers Hyderabad" value="SRH" />
+                    <Picker.Item label="Mumbai Indians" value="MI" />
+                    <Picker.Item label="Royal Challenger Bangalore" value="RCB" />
+                    <Picker.Item label="Kolkata Knight Riders" value="KKR" />
+                    <Picker.Item label="Delhi Daredevils" value="DR" />
+                    <Picker.Item label="Chennai Super Kings" value="CSK" />
+                    <Picker.Item label="Rajasthan Royals" value="RR" />
 
                 </Picker>
                     </View>
@@ -81,13 +90,13 @@ export default class Main extends Component {
                     selectedValue={this.state.team2}
                     style={{ height: 50, width: 150,marginTop:5}}
                     onValueChange={(itemValue, itemIndex) => this.setState({ team2: itemValue })}>
-                    <Picker.Item label="Sunrisers Hyderabad" value="1" />
-                    <Picker.Item label="Mumbai Indians" value="2" />
-                    <Picker.Item label="Royal Challenger Bangalore" value="5" />
-                    <Picker.Item label="Kolkata Knight Riders" value="6" />
-                    <Picker.Item label="Delhi Daredevils" value="7" />
-                    <Picker.Item label="Chennai Super Kings" value="9" />
-                    <Picker.Item label="Rajasthan Royals" value="10" />
+                  <Picker.Item label="Sunrisers Hyderabad" value="SRH" />
+                    <Picker.Item label="Mumbai Indians" value="MI" />
+                    <Picker.Item label="Royal Challenger Bangalore" value="RCB" />
+                    <Picker.Item label="Kolkata Knight Riders" value="KKR" />
+                    <Picker.Item label="Delhi Daredevils" value="DR" />
+                    <Picker.Item label="Chennai Super Kings" value="CSK" />
+                    <Picker.Item label="Rajasthan Royals" value="RR" />
                     
                 </Picker>
                     </View>
